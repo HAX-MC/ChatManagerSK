@@ -1,0 +1,35 @@
+options:
+  SP: &f&lYour&b&lServer
+
+command clearchat:
+  aliases: /cc
+  permission: Staff.clearchat
+  permission message: &cYou don't have permissions for that
+  trigger:
+    loop 300 times:
+      broadcast ""
+      broadcast " "
+      broadcast "  "
+      broadcast "   "
+      broadcast "    "
+    broadcast "{@SP}      &dChat have been cleared by &a%player%&d!"
+command /mutechat:
+  permission: op
+  permission message: &cYou don't have permissions for that
+  trigger:
+    if {chat} is true:
+      set {chat} to false
+      broadcast "{@SP} &4Chat got muted, You shall not speak anymore."
+    else:
+      set {chat} to true
+      broadcast "{@SP} &aChat got unmuted, You can speak now!"
+
+on chat:
+  if player has the permission "op":
+    stop
+  else:
+    if {chat} is true:
+      stop
+    else if {chat} is false:
+      cancel event
+      set action bar of player to colored "{@SP} &aThe chat is muted right now."
